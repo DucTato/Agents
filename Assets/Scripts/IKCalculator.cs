@@ -10,13 +10,18 @@ public class IKCalculator : MonoBehaviour
     public Vector3 target = Vector3.forward;
     public Vector3 normal = Vector3.up;
 
+    [SerializeField]
+    private float rotationSpeed;
+    private float upperLength, lowerLength, effectorLength;
+    private Vector3 effectorTarget, tipTarget;
+    private Quaternion desiredPivot, desiredUpper, desiredLower, desiredEffector;
 
-    float upperLength, lowerLength, effectorLength, pivotLength;
-    Vector3 effectorTarget, tipTarget;
+    private bool isRotating;
 
     void Reset()
     {
         pivot = transform;
+        
         try
         {
             upper = pivot.GetChild(0);
@@ -35,39 +40,59 @@ public class IKCalculator : MonoBehaviour
         upperLength = (lower.position - upper.position).magnitude;
         lowerLength = (effector.position - lower.position).magnitude;
         effectorLength = (tip.position - effector.position).magnitude;
-        pivotLength = (upper.position - pivot.position).magnitude;
     }
 
 
     void Solve()
     {
-        var pivotDir = effectorTarget - pivot.position;
-        pivot.rotation = Quaternion.LookRotation(pivotDir);
+        Vector3 pivotDir = effectorTarget - pivot.position;
+        desiredPivot = Quaternion.LookRotation(pivotDir);
 
-        var upperToTarget = (effectorTarget - upper.position);
-        var a = upperLength;
-        var b = lowerLength;
-        var c = upperToTarget.magnitude;
+        Vector3 upperToTarget = (effectorTarget - upper.position);
+        float a = upperLength;
+        float b = lowerLength;
+        float c = upperToTarget.magnitude;
 
-        var B = Mathf.Acos((c * c + a * a - b * b) / (2 * c * a)) * Mathf.Rad2Deg;
-        var C = Mathf.Acos((a * a + b * b - c * c) / (2 * a * b)) * Mathf.Rad2Deg;
-
+        float B = Mathf.Acos((c * c + a * a - b * b) / (2 * c * a)) * 57.29578f;
+        float C = Mathf.Acos((a * a + b * b - c * c) / (2 * a * b)) * 57.29578f;
+        // 1 radian = 57.29578 degree
         if (!float.IsNaN(C))
         {
-            var upperRotation = Quaternion.AngleAxis((-B), Vector3.right);
-            upper.localRotation = upperRotation;
-            var lowerRotation = Quaternion.AngleAxis(180 - C, Vector3.right);
-            lower.localRotation = lowerRotation;
+            Quaternion upperRotation = Quaternion.AngleAxis((-B), Vector3.right);
+            desiredUpper = upperRotation;
+            Quaternion lowerRotation = Quaternion.AngleAxis(180 - C, Vector3.right);
+            desiredLower = lowerRotation;
         }
-        var effectorRotation = Quaternion.LookRotation(tipTarget - effector.position);
-        effector.rotation = effectorRotation;
+        
     }
 
     void Update()
     {
-        tipTarget = target;
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartRotation(target);
+        }
+        if (isRotating)
+        {
+            pivot.rotation = Quaternion.RotateTowards(pivot.rotation, desiredPivot, rotationSpeed * Time.deltaTime);
+            upper.localRotation = Quaternion.RotateTowards(upper.localRotation, desiredUpper, rotationSpeed * Time.deltaTime);
+            lower.localRotation = Quaternion.RotateTowards(lower.localRotation, desiredLower, rotationSpeed * Time.deltaTime);
+            Quaternion effectorRotation = Quaternion.LookRotation(tipTarget - effector.position);
+            desiredEffector = effectorRotation;
+            effector.rotation = Quaternion.RotateTowards(effector.rotation, desiredEffector, rotationSpeed * Time.deltaTime);
+            if (effector.rotation == desiredEffector)
+            {
+                isRotating = false;
+                Debug.Log("Done Rotating");
+            }
+        }
+    }
+    public void StartRotation(Vector3 desiredTarget)
+    {
+        tipTarget = desiredTarget;
         effectorTarget = target + normal * effectorLength;
         Solve();
+        isRotating = true;
     }
 
 }
