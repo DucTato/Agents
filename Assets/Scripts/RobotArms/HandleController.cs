@@ -8,7 +8,6 @@ public class HandleController : MonoBehaviour
     private Transform fingerJoint1, fingerJoint2, fingerJoint3;
     public bool isGrabbing = false;
     private bool grabEngage, matchedContact;
-    [SerializeField]
     private int contactPoint;
     [SerializeField]
     private float engageSpeed = 15f;
@@ -34,10 +33,6 @@ public class HandleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartGrab();
-        }
         if (grabEngage)
         {
             if (!isGrabbing)
@@ -45,9 +40,11 @@ public class HandleController : MonoBehaviour
                 fingerJoint1.localRotation = Quaternion.RotateTowards(fingerJoint1.localRotation, joint1Close, engageSpeed * 15f * Time.deltaTime);
                 fingerJoint2.localRotation = Quaternion.RotateTowards(fingerJoint2.localRotation, joint2Close, engageSpeed * 15f * Time.deltaTime);
                 fingerJoint3.localRotation = Quaternion.RotateTowards(fingerJoint3.localRotation, joint3Close, engageSpeed * 15f * Time.deltaTime);
+                //Rotate the claw hand clockwise
                 clawHand.transform.Rotate(0f, 0f, 0.25f);
                 Extrude();
-                /////////////////////
+                //Contact claw collision check. If all 3 claws are touching the same object then contactPoint will increase. 
+                //If there're 3 contact points then the collision check will pass
                 for (int i = 0; i < fingerClaws.Length; i++)
                 {
                     if (fingerClaws[i].contact)
@@ -80,6 +77,7 @@ public class HandleController : MonoBehaviour
             }
             else
             {
+                // Retreat the claw handle upon a successful grab
                 Intrude();
             }
         }
@@ -92,7 +90,7 @@ public class HandleController : MonoBehaviour
         }
 
     }
-    private void StartGrab()
+    public void StartGrab()
     {
         if (grabEngage)
         {
@@ -128,15 +126,15 @@ public class HandleController : MonoBehaviour
     {
         if(transform.localPosition.z < 0.6f)
         {
-            moveDir = 1.1f * Time.deltaTime * Vector3.forward;
+            moveDir = 1.2f * Time.deltaTime * Vector3.forward;
             transform.localPosition += moveDir;
         }
     }
     private void Intrude()
     {
-        if(transform.localPosition.z > 0.2f)
+        if(transform.localPosition.z > -0.15f)
         {
-            moveDir = -0.7f * Time.deltaTime * Vector3.forward;
+            moveDir = -0.8f * Time.deltaTime * Vector3.forward;
             transform.localPosition += moveDir;
         }
     }

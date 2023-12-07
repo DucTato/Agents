@@ -5,9 +5,7 @@ public class IKCalculator : MonoBehaviour
 {
 
     public Transform pivot, upper, lower, effector, tip;
-    public Vector3 target = Vector3.forward;
     public Vector3 normal = Vector3.up;
-
     [SerializeField]
     private float rotationSpeed;
     private float upperLength, lowerLength, effectorLength;
@@ -15,6 +13,10 @@ public class IKCalculator : MonoBehaviour
     private Quaternion desiredPivot, desiredUpper, desiredLower, desiredEffector;
 
     private bool isRotating;
+
+    // Quaternion states
+    private Quaternion pivotReset = Quaternion.Euler(-90, 0, 0);
+    private Quaternion zeroQuaternion = Quaternion.Euler(0, 0, 0);
 
     void Reset()
     {
@@ -66,10 +68,6 @@ public class IKCalculator : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartRotation(target);
-        }
         if (isRotating)
         {
             pivot.rotation = Quaternion.RotateTowards(pivot.rotation, desiredPivot, rotationSpeed * Time.deltaTime);
@@ -88,9 +86,17 @@ public class IKCalculator : MonoBehaviour
     public void StartRotation(Vector3 desiredTarget)
     {
         tipTarget = desiredTarget;
-        effectorTarget = target + normal * effectorLength;
+        effectorTarget = tipTarget + normal * effectorLength;
         Solve();
         isRotating = true;
     }
-
+    public void ResetRotation()
+    {
+        desiredPivot = pivotReset;
+        desiredLower = zeroQuaternion;
+        desiredUpper = zeroQuaternion;
+        tipTarget = new Vector3(transform.parent.position.x, transform.parent.position.y + 6, transform.parent.position.z);
+        effectorTarget = tipTarget + normal * effectorLength;
+        isRotating = true;
+    }
 }

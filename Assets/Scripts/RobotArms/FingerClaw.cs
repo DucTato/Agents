@@ -7,7 +7,7 @@ public class FingerClaw : MonoBehaviour
     
     private void OnTriggerEnter (Collider other)
     {
-        if (other.gameObject.CompareTag("Grabbable"))
+        if (other.gameObject.CompareTag("Grabbable") || other.gameObject.CompareTag("Priority"))
         {
             contact = true;
             grabbedObject = other.gameObject;
@@ -16,7 +16,7 @@ public class FingerClaw : MonoBehaviour
     }
     private void OnTriggerExit (Collider other)
     {
-        if(other.gameObject.CompareTag("Grabbable"))
+        if(other.gameObject.CompareTag("Grabbable") || other.gameObject.CompareTag("Priority"))
         {
             UpdateContact();
         }    

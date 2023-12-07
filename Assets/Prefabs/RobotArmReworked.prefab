@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7174632965621664819}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.751}
-  m_LocalScale: {x: 0.15, y: 0.06, z: 0.15}
+  m_LocalPosition: {x: -0, y: -0, z: 0.467}
+  m_LocalScale: {x: 0.15, y: 0.03, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8933627477094519477}
@@ -181,6 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11da2fa9488a0549846a90aa6aa5386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handleControl: {fileID: 770199640292206573}
+  armControl: {fileID: 9115103392373819390}
+  intendedTarget: {x: 0, y: 0, z: 0}
 --- !u!114 &331653978057903154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 8933627476482070368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.56, y: 0.56, z: 0.38}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8933627476492687559}
@@ -802,7 +805,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933627476642023480}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -812,7 +815,7 @@ Transform:
   - {fileID: 8933627477129293038}
   m_Father: {fileID: 9115103392373819391}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8933627476698949604
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,7 +841,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933627476698949604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0.2}
+  m_LocalPosition: {x: -0, y: -0, z: -0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -867,8 +870,7 @@ MonoBehaviour:
   fingerJoint2: {fileID: 8933627478352087766}
   fingerJoint3: {fileID: 8933627478238072128}
   isGrabbing: 0
-  contactPoint: 0
-  engageSpeed: 15
+  engageSpeed: 3.5
   clawHand: {fileID: 8933627476492687558}
 --- !u!1 &8933627476744214590
 GameObject:
@@ -1222,8 +1224,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933627476928824403}
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0, y: -0, z: 0.269}
-  m_LocalScale: {x: 0.35, y: 1, z: 0.22000001}
+  m_LocalPosition: {x: 0, y: 0, z: 0.163}
+  m_LocalScale: {x: 0.35, y: 0.58, z: 0.22000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8933627477094519477}
@@ -1416,8 +1418,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933627476983982714}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.441}
-  m_LocalScale: {x: 0.1, y: 0.33, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.282}
+  m_LocalScale: {x: 0.1, y: 0.39, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8933627476698949605}
@@ -1694,9 +1696,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933627477094519476}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: 0.444}
+  m_LocalPosition: {x: -0, y: 0, z: 0.361}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1038688314161308391}
   - {fileID: 8933627476928824400}
@@ -2960,7 +2962,6 @@ GameObject:
   - component: {fileID: 8933627478172896143}
   - component: {fileID: 8933627478172896130}
   - component: {fileID: 8933627478172896141}
-  - component: {fileID: 8933627478172896140}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -3033,20 +3034,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8933627478172896140
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8933627478172896142}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8933627478238072131
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,6 +3539,5 @@ MonoBehaviour:
   lower: {fileID: 8933627477129293038}
   effector: {fileID: 8933627476561824573}
   tip: {fileID: 9115103391877272920}
-  target: {x: 1, y: 2, z: 2.3}
   normal: {x: 0, y: 1, z: 0}
   rotationSpeed: 110
