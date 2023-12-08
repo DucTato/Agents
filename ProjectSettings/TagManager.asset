@@ -9,6 +9,10 @@ TagManager:
   - Robot
   - Priority
   - Ground
+  - Spawn
+  - Tower
+  - Pyramid
+  - StackGround
   layers:
   - Default
   - TransparentFX

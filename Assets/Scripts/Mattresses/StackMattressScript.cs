@@ -1,61 +1,73 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartMattressScript : MonoBehaviour
+public class StackMattressScript : MonoBehaviour
 {
+    [SerializeField]
+    private StackType type;
+    [SerializeField]
+    private int spawnCount;
     [SerializeField]
     private float spawnDelay;
     private float timerCount;
     [SerializeField]
-    private int spawnCount;
-    private int index, cubeCount;
-    [SerializeField]
-    private List<GameObject> cubesToSpawn;
-    [SerializeField]
     private GameObject cubePrefab;
     [SerializeField]
     private Text cubeCountText;
+    [SerializeField]
+    private List<GameObject> cubesToSpawn;
+    private int index, cubeCount;
     private void Awake()
     {
         UpdateUIElement(cubeCount);
-        // Generate Pastel Red color with rgb(223, 130, 108)
-        GetComponent<Renderer>().material.color = new Color(0.87f, 0.5f, 0.42f);
+        if (type == 0)
+        {
+            gameObject.tag = "Tower";
+            // Generate color of this mattress with rgb(208, 242, 136)
+            GetComponent<Renderer>().material.color = new Color(0.8125f, 0.945f, 0.53f);
+        }
+        else
+        {
+            gameObject.tag = "Pyramid";
+            // Generate color of this mattress with rgb(220, 191, 255)
+            GetComponent<Renderer>().material.color = new Color(0.8593f, 0.746f, 1);
+        }
         for (int i = 0; i < spawnCount; i++)
         {
-            // Spawn a cube from the start of the scene, then add them to a list 
-            cubesToSpawn.Add(Instantiate(cubePrefab).GetComponent<PrioritizedCube>().SetSpawn(gameObject));
+            cubesToSpawn.Add(Instantiate(cubePrefab).GetComponent<StackCube>().SetSpawn(gameObject));
         }
     }
+
     // Update is called once per frame
     void Update()
     {
-        if (timerCount >= 0)
+        if (timerCount >= 0f)
         {
             timerCount -= Time.deltaTime;
         }
         else
         {
-            //Spawn a new cube every spawnDelay second
+            //Spawn a cube every timeDelay second
             index = Random.Range(0, cubesToSpawn.Count);
             if (!cubesToSpawn[index].activeInHierarchy)
             {
                 cubesToSpawn[index].SetActive(true);
-            }            
+            }
             timerCount = spawnDelay;
-            //Debug.Log(spawnDelay + " seconds have passed");
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Priority"))
+        if(collision.gameObject.CompareTag("Grabbable"))
         {
             UpdateUIElement(++cubeCount);
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Priority"))
+        if(collision.gameObject.CompareTag("Grabbable"))
         {
             UpdateUIElement(--cubeCount);
         }
@@ -64,4 +76,9 @@ public class StartMattressScript : MonoBehaviour
     {
         cubeCountText.text = currentCount + "/" + spawnCount;
     }
+}
+public enum StackType
+{
+    Tower,
+    Pyramid
 }

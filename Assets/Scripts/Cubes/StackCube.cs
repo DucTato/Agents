@@ -1,32 +1,37 @@
 using UnityEngine;
 
-public class PrioritizedCubes : MonoBehaviour
+public class StackCube : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject initialMattress;
-    private float touchGround;
     private bool touchedGround;
+    private float touchGround;
+    private GameObject initialMattress;
+
     private void Awake()
     {
-    //Generate a color for the cube
-        GetComponent<Renderer>().material.color = Color.red;
-        gameObject.SetActive(false);
+        GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 0f, 0f, 0f, 1f);
     }
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
+        gameObject.SetActive(false);
         ReturnToSpawn();
     }
-    private void Update()
+
+    // Update is called once per frame
+    void Update()
     {
         if (touchedGround)
         {
             touchGround += Time.deltaTime;
-            if (touchGround >= 10f)
+            if (touchGround > 5f)
             {
-                // If a cube stay idle on the ground for 10 seconds then reset the cube's position
-                ReturnToSpawn();
+                ReturnToSpawn(); 
             }
         }
+    }
+    private void OnDisable()
+    {
+        ReturnToSpawn();
     }
     private void ReturnToSpawn()
     {
@@ -36,18 +41,12 @@ public class PrioritizedCubes : MonoBehaviour
         if (initialMattress != null)
         {
             BoxCollider boundary = initialMattress.GetComponent<BoxCollider>();
-            float randomX = Random.Range(boundary.bounds.center.x - 2f, boundary.bounds.center.x + 2f);
-            float randomZ = Random.Range(boundary.bounds.center.z - 1f, boundary.bounds.center.z + 1f);
+            float randomX = Random.Range(boundary.bounds.center.x - 1f, boundary.bounds.center.x + 1f);
+            float randomZ = Random.Range(boundary.bounds.center.z - 0.5f, boundary.bounds.center.z + 0.5f);
             float randomY = Random.Range(0.7f, 4f);
-            //transform.position = new Vector3(randomX, randomY, randomZ);
-            //transform.rotation = initialMattress.transform.rotation;
             //Debug.Log(gameObject.name + " " + randomX + " " + randomY + " " + randomZ);
             transform.SetPositionAndRotation(new Vector3(randomX, randomY, randomZ), initialMattress.transform.rotation);
         }
-    }
-    private void OnDisable()
-    {
-        ReturnToSpawn();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -56,13 +55,18 @@ public class PrioritizedCubes : MonoBehaviour
             //Debug.Log("Touch Ground");
             touchedGround = true;
         }
-    }    
+    }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            touchedGround = false; 
+            touchedGround = false;
             touchGround = 0;
         }
+    }
+    public GameObject SetSpawn(GameObject mattress)
+    {
+        initialMattress = mattress;
+        return gameObject;
     }
 }
