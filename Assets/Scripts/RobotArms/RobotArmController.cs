@@ -8,10 +8,17 @@ public class RobotArmController : MonoBehaviour
     [SerializeField]
     private IKCalculator armControl;
     public Vector3 intendedTarget;
+
+    public bool isPicking;
     // Start is called before the first frame update
     void Start()
     {
-       
+        armControl.OnRotationCompleted += ArmControl_OnRotationCompleted;
+    }
+
+    private void ArmControl_OnRotationCompleted(object sender, System.EventArgs e)
+    {
+        Debug.Log("Done Rotating");
     }
 
     // Update is called once per frame
@@ -29,5 +36,15 @@ public class RobotArmController : MonoBehaviour
         {
             armControl.ResetRotation();
         }
+        
+    }
+    public void PickAtTarget(Vector3 target)
+    {
+        armControl.StartRotation(target);
+        
+    }
+    private void OnDisable()
+    {
+        armControl.OnRotationCompleted -= ArmControl_OnRotationCompleted;
     }
 }

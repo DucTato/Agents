@@ -15,4 +15,8 @@ public class EndMattressScript : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }
+    private void Start()
+    {
+        SystemController.instance.RegisterEndPoint(this);
+    }
 }

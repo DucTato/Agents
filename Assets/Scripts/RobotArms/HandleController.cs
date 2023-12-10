@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class HandleController : MonoBehaviour
 {
+    public event EventHandler OnSuccessfulGrab;
     [SerializeField]
     private FingerClaw[] fingerClaws;
     [SerializeField]
@@ -14,6 +16,7 @@ public class HandleController : MonoBehaviour
     [SerializeField]
     private GameObject clawHand;
     private GameObject clawGrabbedObject;
+    private string grabbedTag;
     // Quaternion states
     private Quaternion joint1Open = Quaternion.Euler(40, -180, 0);
     private Quaternion joint2Open = Quaternion.Euler(40, 60, 0);
@@ -72,6 +75,7 @@ public class HandleController : MonoBehaviour
                     isGrabbing = true;
                     GrabProcedure();
                     Debug.Log(gameObject.GetInstanceID() + " Grab successful");
+                    OnSuccessfulGrab?.Invoke(this, EventArgs.Empty);
                 }
                 contactPoint = 0;
             }
@@ -111,6 +115,8 @@ public class HandleController : MonoBehaviour
     private void GrabProcedure()
     {
         clawGrabbedObject.transform.parent = clawHand.transform;
+        grabbedTag = clawGrabbedObject.tag;
+        clawGrabbedObject.tag = "Untagged";
         clawGrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
         clawGrabbedObject.GetComponent<BoxCollider>().enabled = false;
     }
@@ -119,6 +125,7 @@ public class HandleController : MonoBehaviour
         if (target == null) return;
         clawGrabbedObject.GetComponent<BoxCollider>().enabled = true;
         clawGrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+        clawGrabbedObject.tag = grabbedTag;
         clawGrabbedObject.transform.parent = null;
         clawGrabbedObject = null;
     }

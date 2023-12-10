@@ -27,6 +27,10 @@ public class StartMattressScript : MonoBehaviour
             cubesToSpawn.Add(Instantiate(cubePrefab).GetComponent<PrioritizedCube>().SetSpawn(gameObject));
         }
     }
+    private void Start()
+    {
+        SystemController.instance.RegisterStartPoint(this);
+    }
     // Update is called once per frame
     void Update()
     {

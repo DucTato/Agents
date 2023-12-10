@@ -21,6 +21,7 @@ public class StackMattressScript : MonoBehaviour
     private int index, cubeCount;
     private void Awake()
     {
+        
         UpdateUIElement(cubeCount);
         if (type == 0)
         {
@@ -39,7 +40,10 @@ public class StackMattressScript : MonoBehaviour
             cubesToSpawn.Add(Instantiate(cubePrefab).GetComponent<StackCube>().SetSpawn(gameObject));
         }
     }
-
+    private void Start()
+    {
+        SystemController.instance.RegisterStackPoint(this);
+    }
     // Update is called once per frame
     void Update()
     {

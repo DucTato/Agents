@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 public class IKCalculator : MonoBehaviour
 {
-
+    public event EventHandler OnRotationCompleted;
     public Transform pivot, upper, lower, effector, tip;
     public Vector3 normal = Vector3.up;
     [SerializeField]
@@ -78,8 +79,9 @@ public class IKCalculator : MonoBehaviour
             effector.rotation = Quaternion.RotateTowards(effector.rotation, desiredEffector, rotationSpeed * Time.deltaTime);
             if (effector.rotation == desiredEffector)
             {
+                //Finish rotating the entire arm, publish an event for the arm to catch
                 isRotating = false;
-                Debug.Log("Done Rotating");
+                OnRotationCompleted?.Invoke(this, EventArgs.Empty);
             }
         }
     }
