@@ -16,9 +16,21 @@ public class RobotArmController : MonoBehaviour
         armControl.OnRotationCompleted += ArmControl_OnRotationCompleted;
     }
 
-    private void ArmControl_OnRotationCompleted(object sender, System.EventArgs e)
+    private void ArmControl_OnRotationCompleted(object sender, IKCalculator.EventArguments e)
     {
         Debug.Log("Done Rotating");
+        
+        switch (e.GetEvent())
+        {
+            case IKCalculator.ActionType.PickAt:
+                handleControl.StartGrab();
+                break;
+            case IKCalculator.ActionType.DropAt: 
+                handleControl.EndGrab();
+                break;
+            case IKCalculator.ActionType.NoneAt: 
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -26,11 +38,11 @@ public class RobotArmController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            handleControl.StartGrab();
+            DropAtTarget(intendedTarget);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            armControl.StartRotation(intendedTarget);
+            PickAtTarget(intendedTarget);
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -41,7 +53,12 @@ public class RobotArmController : MonoBehaviour
     public void PickAtTarget(Vector3 target)
     {
         armControl.StartRotation(target);
-        
+        armControl.SetActionUponRotation(IKCalculator.ActionType.PickAt);
+    }
+    public void DropAtTarget(Vector3 target)
+    {
+        armControl.StartRotation(target);
+        armControl.SetActionUponRotation(IKCalculator.ActionType.DropAt);
     }
     private void OnDisable()
     {

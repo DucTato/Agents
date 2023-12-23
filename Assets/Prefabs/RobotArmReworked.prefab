@@ -185,6 +185,7 @@ MonoBehaviour:
   handleControl: {fileID: 770199640292206573}
   armControl: {fileID: 9115103392373819390}
   intendedTarget: {x: 0, y: 0, z: 0}
+  isPicking: 0
 --- !u!114 &331653978057903154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,6 +887,7 @@ MonoBehaviour:
   fingerJoint3: {fileID: 8933627478238072128}
   isGrabbing: 0
   engageSpeed: 3.5
+  spinTime: 2
   clawHand: {fileID: 8933627476492687558}
 --- !u!1 &8933627476744214590
 GameObject:

@@ -12,7 +12,8 @@ public class HandleController : MonoBehaviour
     private bool grabEngage, matchedContact;
     private int contactPoint;
     [SerializeField]
-    private float engageSpeed = 15f;
+    private float engageSpeed = 15f, spinTime;
+    private float spinCount;
     [SerializeField]
     private GameObject clawHand;
     private GameObject clawGrabbedObject;
@@ -31,6 +32,7 @@ public class HandleController : MonoBehaviour
     void Start()
     {
         moveDir = Vector3.zero;
+        spinCount = spinTime;
     }
 
     // Update is called once per frame
@@ -46,6 +48,15 @@ public class HandleController : MonoBehaviour
                 //Rotate the claw hand clockwise
                 clawHand.transform.Rotate(0f, 0f, 0.25f);
                 Extrude();
+                if (spinCount <= 0) 
+                {
+                    spinCount = spinTime;
+                    EndGrab();
+                }
+                else
+                {
+                    spinCount -= Time.deltaTime;
+                }
                 //Contact claw collision check. If all 3 claws are touching the same object then contactPoint will increase. 
                 //If there're 3 contact points then the collision check will pass
                 for (int i = 0; i < fingerClaws.Length; i++)
@@ -87,31 +98,31 @@ public class HandleController : MonoBehaviour
         }
         else
         {
-            fingerJoint1.localRotation = Quaternion.RotateTowards(fingerJoint1.localRotation, joint1Open, engageSpeed * 60f * Time.deltaTime);
-            fingerJoint2.localRotation = Quaternion.RotateTowards(fingerJoint2.localRotation, joint2Open, engageSpeed * 60f * Time.deltaTime);
-            fingerJoint3.localRotation = Quaternion.RotateTowards(fingerJoint3.localRotation, joint3Open, engageSpeed * 60f * Time.deltaTime);
-            Intrude();
+            if (isGrabbing)
+            {
+                //If the arm is grabbing (is holding a block, extrude the handle before dropping
+                Extrude();
+                
+            } 
+            else
+            {
+                fingerJoint1.localRotation = Quaternion.RotateTowards(fingerJoint1.localRotation, joint1Open, engageSpeed * 60f * Time.deltaTime);
+                fingerJoint2.localRotation = Quaternion.RotateTowards(fingerJoint2.localRotation, joint2Open, engageSpeed * 60f * Time.deltaTime);
+                fingerJoint3.localRotation = Quaternion.RotateTowards(fingerJoint3.localRotation, joint3Open, engageSpeed * 60f * Time.deltaTime);
+                Intrude();
+            }
         }
 
     }
     public void StartGrab()
     {
-        if (grabEngage)
-        {
-            grabEngage = false;
-            isGrabbing = false;
-            contactPoint = 0;
-            UnGrabProcedure(clawGrabbedObject);
-            for (int i = 0; i < fingerClaws.Length; i++)
-            {
-                fingerClaws[i].UpdateContact();
-            }
-        }
-        else
-        {
-            grabEngage = true;
-        }
+        grabEngage = true;
     }
+    public void EndGrab()
+    {
+        grabEngage = false;
+        spinCount = spinTime;
+    }    
     private void GrabProcedure()
     {
         clawGrabbedObject.transform.parent = clawHand.transform;
@@ -135,6 +146,16 @@ public class HandleController : MonoBehaviour
         {
             moveDir = 1.2f * Time.deltaTime * Vector3.forward;
             transform.localPosition += moveDir;
+        }
+        else
+        {
+            isGrabbing = false;
+            contactPoint = 0;
+            UnGrabProcedure(clawGrabbedObject);
+            for (int i = 0; i < fingerClaws.Length; i++)
+            {
+                fingerClaws[i].UpdateContact();
+            }
         }
     }
     private void Intrude()

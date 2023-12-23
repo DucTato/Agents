@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IKCalculator : MonoBehaviour
 {
-    public event EventHandler OnRotationCompleted;
+    public event EventHandler<EventArguments> OnRotationCompleted;
     public Transform pivot, upper, lower, effector, tip;
     public Vector3 normal = Vector3.up;
     [SerializeField]
@@ -12,13 +12,34 @@ public class IKCalculator : MonoBehaviour
     private float upperLength, lowerLength, effectorLength;
     private Vector3 effectorTarget, tipTarget;
     private Quaternion desiredPivot, desiredUpper, desiredLower, desiredEffector;
-
+    
     private bool isRotating;
-
+    
     // Quaternion states
     private Quaternion pivotReset = Quaternion.Euler(-90, 0, 0);
     private Quaternion zeroQuaternion = Quaternion.Euler(0, 0, 0);
 
+    private ActionType actionUponRotation;
+    public enum ActionType
+    {
+        PickAt,
+        DropAt,
+        NoneAt
+    }
+    public class EventArguments : EventArgs
+    {
+        
+        private ActionType eventType;
+        
+        public EventArguments(ActionType type)
+        {
+            eventType = type;
+        }
+        public ActionType GetEvent()
+        {
+            return eventType;
+        }
+    }
     void Reset()
     {
         pivot = transform;
@@ -81,7 +102,7 @@ public class IKCalculator : MonoBehaviour
             {
                 //Finish rotating the entire arm, publish an event for the arm to catch
                 isRotating = false;
-                OnRotationCompleted?.Invoke(this, EventArgs.Empty);
+                OnRotationCompleted?.Invoke(this, new EventArguments(actionUponRotation));
             }
         }
     }
@@ -100,5 +121,9 @@ public class IKCalculator : MonoBehaviour
         tipTarget = new Vector3(transform.parent.position.x, transform.parent.position.y + 6, transform.parent.position.z);
         effectorTarget = tipTarget + normal * effectorLength;
         isRotating = true;
+    }
+    public void SetActionUponRotation(ActionType action)
+    {
+        actionUponRotation = action;
     }
 }
