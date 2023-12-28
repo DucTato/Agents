@@ -17,6 +17,6 @@ public class EndMattressScript : MonoBehaviour
     }
     private void Start()
     {
-        SystemController.instance.RegisterEndPoint(this);
+        SystemController.instance.RegisterEndPoint(gameObject);
     }
 }

@@ -20,7 +20,7 @@ public class StackCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (touchedGround)
+        if (touchedGround && gameObject.CompareTag("Grabbable"))
         {
             touchGround += Time.deltaTime;
             if (touchGround > 5f)

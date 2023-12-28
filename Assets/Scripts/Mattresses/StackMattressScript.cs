@@ -15,14 +15,12 @@ public class StackMattressScript : MonoBehaviour
     [SerializeField]
     private GameObject cubePrefab;
     [SerializeField]
-    private Text cubeCountText;
-    [SerializeField]
     private List<GameObject> cubesToSpawn;
-    private int index, cubeCount;
+    private int index;
     private void Awake()
     {
         
-        UpdateUIElement(cubeCount);
+       
         if (type == 0)
         {
             gameObject.tag = "Tower";
@@ -42,7 +40,7 @@ public class StackMattressScript : MonoBehaviour
     }
     private void Start()
     {
-        SystemController.instance.RegisterStackPoint(this);
+        SystemController.instance.RegisterStackPoint(gameObject);
     }
     // Update is called once per frame
     void Update()
@@ -61,24 +59,6 @@ public class StackMattressScript : MonoBehaviour
             }
             timerCount = spawnDelay;
         }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Grabbable"))
-        {
-            UpdateUIElement(++cubeCount);
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Grabbable"))
-        {
-            UpdateUIElement(--cubeCount);
-        }
-    }
-    private void UpdateUIElement(int currentCount)
-    {
-        cubeCountText.text = currentCount + "/" + spawnCount;
     }
 }
 public enum StackType

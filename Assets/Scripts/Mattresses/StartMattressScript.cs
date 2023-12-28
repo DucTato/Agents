@@ -9,16 +9,13 @@ public class StartMattressScript : MonoBehaviour
     private float timerCount;
     [SerializeField]
     private int spawnCount;
-    private int index, cubeCount;
+    private int index;
     [SerializeField]
     private List<GameObject> cubesToSpawn;
     [SerializeField]
     private GameObject cubePrefab;
-    [SerializeField]
-    private Text cubeCountText;
     private void Awake()
     {
-        UpdateUIElement(cubeCount);
         // Generate Pastel Red color with rgb(223, 130, 108)
         GetComponent<Renderer>().material.color = new Color(0.87f, 0.5f, 0.42f);
         for (int i = 0; i < spawnCount; i++)
@@ -29,7 +26,7 @@ public class StartMattressScript : MonoBehaviour
     }
     private void Start()
     {
-        SystemController.instance.RegisterStartPoint(this);
+        SystemController.instance.RegisterStartPoint(gameObject);
     }
     // Update is called once per frame
     void Update()
@@ -49,23 +46,5 @@ public class StartMattressScript : MonoBehaviour
             timerCount = spawnDelay;
             //Debug.Log(spawnDelay + " seconds have passed");
         }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Priority"))
-        {
-            UpdateUIElement(++cubeCount);
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Priority"))
-        {
-            UpdateUIElement(--cubeCount);
-        }
-    }
-    private void UpdateUIElement(int currentCount)
-    {
-        cubeCountText.text = currentCount + "/" + spawnCount;
-    }
+    }    
 }

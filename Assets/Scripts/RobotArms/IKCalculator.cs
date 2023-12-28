@@ -5,6 +5,7 @@ using UnityEngine;
 public class IKCalculator : MonoBehaviour
 {
     public event EventHandler<EventArguments> OnRotationCompleted;
+    public event EventHandler<EventArgs> OnResetArm;
     public Transform pivot, upper, lower, effector, tip;
     public Vector3 normal = Vector3.up;
     [SerializeField]
@@ -103,6 +104,7 @@ public class IKCalculator : MonoBehaviour
                 //Finish rotating the entire arm, publish an event for the arm to catch
                 isRotating = false;
                 OnRotationCompleted?.Invoke(this, new EventArguments(actionUponRotation));
+                actionUponRotation = ActionType.NoneAt;
             }
         }
     }
@@ -115,15 +117,30 @@ public class IKCalculator : MonoBehaviour
     }
     public void ResetRotation()
     {
+        actionUponRotation = ActionType.NoneAt;
         desiredPivot = pivotReset;
         desiredLower = zeroQuaternion;
         desiredUpper = zeroQuaternion;
-        tipTarget = new Vector3(transform.parent.position.x, transform.parent.position.y + 6, transform.parent.position.z);
+        tipTarget = new Vector3(transform.parent.position.x, transform.parent.position.y + 12, transform.parent.position.z);
         effectorTarget = tipTarget + normal * effectorLength;
         isRotating = true;
+        OnResetArm?.Invoke(this, EventArgs.Empty);
+        Debug.Log("Reset");
     }
     public void SetActionUponRotation(ActionType action)
     {
         actionUponRotation = action;
+    }
+    public bool GetRotationStatus()
+    {
+        return isRotating;
+    }
+    public ActionType GetActionType()
+    {
+        return actionUponRotation;
+    }
+    public Vector3 GetTipPosition()
+    {
+        return tip.position;
     }
 }

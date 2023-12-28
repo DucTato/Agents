@@ -17,7 +17,7 @@ public class PrioritizedCube : MonoBehaviour
     }
     private void Update()
     {
-        if (touchedGround)
+        if (touchedGround && gameObject.CompareTag("Priority"))
         {
             touchGround += Time.deltaTime;
             if (touchGround >= 10f)
