@@ -1,7 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class StackMattressScript : MonoBehaviour
 {
@@ -59,6 +59,24 @@ public class StackMattressScript : MonoBehaviour
             }
             timerCount = spawnDelay;
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Grabbable") || other.gameObject.CompareTag("StackedCube"))
+        {
+            //Debug.Log("Returned a stack cube");
+            other.gameObject.SetActive(false);
+        }
+    }
+    public Vector3 GetStackLocation()
+    {
+        //Debug.Log(transform.GetChild(0).name);
+        return transform.GetChild(0).transform.position;
+    }
+    public Vector3 GetButtonLocation()
+    {
+        //Debug.Log(transform.GetChild(1).name);
+        return transform.GetChild(1).transform.position;
     }
 }
 public enum StackType

@@ -11,7 +11,7 @@ public class EndMattressScript : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Priority"))
         {
-            Debug.Log("Returned a Cube");
+            //Debug.Log("Returned a Cube");
             collision.gameObject.SetActive(false);
         }
     }

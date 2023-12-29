@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class StartMattressScript : MonoBehaviour
 {
@@ -46,5 +46,6 @@ public class StartMattressScript : MonoBehaviour
             timerCount = spawnDelay;
             //Debug.Log(spawnDelay + " seconds have passed");
         }
-    }    
+    }
+    
 }

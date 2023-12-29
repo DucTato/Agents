@@ -26,6 +26,10 @@ public class PrioritizedCube : MonoBehaviour
                 ReturnToSpawn();
             }
         }
+        else
+        {
+            touchGround = 0f;
+        }
     }
     private void ReturnToSpawn()
     {

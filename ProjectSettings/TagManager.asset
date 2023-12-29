@@ -13,6 +13,8 @@ TagManager:
   - Tower
   - Pyramid
   - StackGround
+  - DestroyButton
+  - StackedCube
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Robots
+  - InvisibleWall
   - 
   - 
   - 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1038688314161308391}
   - component: {fileID: 5565476362632781019}
   - component: {fileID: 506975774644606339}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: motor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476433239147}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerJoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2564073823202869449}
   - component: {fileID: 331653978057903154}
   - component: {fileID: 3043555716673706215}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RobotArmReworked
   m_TagString: Robot
   m_Icon: {fileID: 0}
@@ -213,6 +213,7 @@ MonoBehaviour:
   pollingRate: 1
   decision: 0
   intendedTarget: {x: 0, y: 0, z: 0}
+  dropTarget: {x: 0, y: 0, z: 0}
 --- !u!1 &8933627476482070368
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +226,7 @@ GameObject:
   - component: {fileID: 8933627476482070372}
   - component: {fileID: 8933627476482070375}
   - component: {fileID: 8933627476482070374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476492687559}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ClawBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +356,7 @@ GameObject:
   - component: {fileID: 8933627476495702740}
   - component: {fileID: 8933627476495702743}
   - component: {fileID: 8933627476495702742}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476523819644}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerPartShort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476561824573}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmJointVertical (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +520,7 @@ GameObject:
   - component: {fileID: 8933627476584089044}
   - component: {fileID: 8933627476584089047}
   - component: {fileID: 8933627476584089046}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476594448294}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -649,7 +650,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476610516385}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +688,7 @@ GameObject:
   - component: {fileID: 8933627476622997555}
   - component: {fileID: 312003902487925271}
   - component: {fileID: 5969134627543242203}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: contact
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -808,7 +809,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476642023481}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmJointVertical (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +844,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8933627476698949605}
   - component: {fileID: 770199640292206573}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -902,7 +903,7 @@ GameObject:
   - component: {fileID: 8933627476744214578}
   - component: {fileID: 8933627476744214589}
   - component: {fileID: 8933627476744214588}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -996,7 +997,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627476758981670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerPartShort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1031,7 +1032,7 @@ GameObject:
   - component: {fileID: 8933627476770113961}
   - component: {fileID: 8933627476770113960}
   - component: {fileID: 8933627476770113963}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,7 +1129,7 @@ GameObject:
   - component: {fileID: 8933627476819067728}
   - component: {fileID: 8933627476819067732}
   - component: {fileID: 8933627476819067735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1212,7 +1213,7 @@ GameObject:
   - component: {fileID: 8933627476928824407}
   - component: {fileID: 8933627476928824406}
   - component: {fileID: 4525262074547972561}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -1309,7 +1310,7 @@ GameObject:
   - component: {fileID: 8933627476953094946}
   - component: {fileID: 8933627476953094957}
   - component: {fileID: 8933627476953094956}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1406,7 +1407,7 @@ GameObject:
   - component: {fileID: 8933627476983982715}
   - component: {fileID: 8933627476983982718}
   - component: {fileID: 8933627476983982713}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1489,7 +1490,7 @@ GameObject:
   - component: {fileID: 8933627477030979189}
   - component: {fileID: 8933627477030979177}
   - component: {fileID: 8933627477030979176}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1570,7 +1571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477036271151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerJoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1603,7 +1604,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477058045589}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerPartLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1636,7 +1637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477081952086}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerPartLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1669,7 +1670,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477094519477}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1703,7 +1704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477129293038}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmJointVertical (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1740,7 +1741,7 @@ GameObject:
   - component: {fileID: 8933627477192870412}
   - component: {fileID: 8933627477192870415}
   - component: {fileID: 8933627477192870414}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1835,7 +1836,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477198275588}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmJointBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1871,7 +1872,7 @@ GameObject:
   - component: {fileID: 8933627477234456851}
   - component: {fileID: 8933627477234456850}
   - component: {fileID: 8933627477234456861}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -1968,7 +1969,7 @@ GameObject:
   - component: {fileID: 8933627477255965701}
   - component: {fileID: 8933627477255965700}
   - component: {fileID: 8933627477255965703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2063,7 +2064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477286138326}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2095,7 +2096,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477306735051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerPartLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2133,7 +2134,7 @@ GameObject:
   - component: {fileID: 8933627477315001116}
   - component: {fileID: 5127312809648561884}
   - component: {fileID: 7861298180300984937}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: contact
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -2257,7 +2258,7 @@ GameObject:
   - component: {fileID: 8933627477359816140}
   - component: {fileID: 8933627477359816143}
   - component: {fileID: 8933627477359816142}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -2351,7 +2352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627477459043982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BasePart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2386,7 +2387,7 @@ GameObject:
   - component: {fileID: 8933627477755958784}
   - component: {fileID: 8933627477755958787}
   - component: {fileID: 8933627477755958786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2482,7 +2483,7 @@ GameObject:
   - component: {fileID: 8933627477795836746}
   - component: {fileID: 8933627477795836745}
   - component: {fileID: 8933627477795836744}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BaseHorizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2566,7 +2567,7 @@ GameObject:
   - component: {fileID: 8933627477855558149}
   - component: {fileID: 8933627477855558148}
   - component: {fileID: 8933627477855558151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -2660,7 +2661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627478009221726}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerJoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2693,7 +2694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627478048418972}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2730,7 +2731,7 @@ GameObject:
   - component: {fileID: 8933627478085110018}
   - component: {fileID: 4503744159946161199}
   - component: {fileID: 5467051891423134384}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: contact
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -2854,7 +2855,7 @@ GameObject:
   - component: {fileID: 8933627478089824476}
   - component: {fileID: 8933627478089824479}
   - component: {fileID: 8933627478089824478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -2950,7 +2951,7 @@ GameObject:
   - component: {fileID: 8933627478172896143}
   - component: {fileID: 8933627478172896130}
   - component: {fileID: 8933627478172896141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3031,7 +3032,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627478238072128}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerJoint (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3064,7 +3065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627478284743564}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerPartShort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3099,7 +3100,7 @@ GameObject:
   - component: {fileID: 8933627478332063212}
   - component: {fileID: 8933627478332063215}
   - component: {fileID: 8933627478332063214}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Recolorable
   m_Icon: {fileID: 0}
@@ -3193,7 +3194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627478352087766}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerJoint (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3226,7 +3227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8933627478481588887}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FingerJoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3262,7 +3263,7 @@ GameObject:
   - component: {fileID: 8933627478508431649}
   - component: {fileID: 8933627478508431648}
   - component: {fileID: 8933627478508431651}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3359,7 +3360,7 @@ GameObject:
   - component: {fileID: 8933627478551727238}
   - component: {fileID: 8933627478551727354}
   - component: {fileID: 8933627478551727237}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3440,7 +3441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9115103391877272920}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GrabDistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3472,7 +3473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9115103392373819391}
   - component: {fileID: 9115103392373819390}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

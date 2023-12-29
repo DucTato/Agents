@@ -11,7 +11,7 @@ public class HandleController : MonoBehaviour
     private Transform fingerJoint1, fingerJoint2, fingerJoint3;
     public bool isGrabbing = false;
     private bool grabEngage, matchedContact, handleBusy;
-    private int contactPoint, currentCubeID;
+    private int contactPoint;
     [SerializeField]
     private float engageSpeed = 15f, spinTime;
     private float spinCount;
@@ -81,35 +81,38 @@ public class HandleController : MonoBehaviour
                 {
                     spinCount -= Time.deltaTime;
                 }
-                //Contact claw collision check. If all 3 claws are touching the same object then contactPoint will increase. 
-                //If there're 3 contact points then the collision check will pass
-                for (int i = 0; i < fingerClaws.Length; i++)
+                if (fingerJoint1.localRotation != joint1Close)
                 {
-                    if (fingerClaws[i].contact)
+                    //Contact claw collision check. If all 3 claws are touching the same object then contactPoint will increase. 
+                    //If there're 3 contact points then the collision check will pass
+                    for (int i = 0; i < fingerClaws.Length; i++)
                     {
-                        if (clawGrabbedObject == null)
+                        if (fingerClaws[i].contact)
                         {
-                            clawGrabbedObject = fingerClaws[i].grabbedObject;
-                        }
-                        else
-                        {
-                            if (clawGrabbedObject == fingerClaws[i].grabbedObject)
+                            if (clawGrabbedObject == null)
                             {
-                                matchedContact = true;
+                                clawGrabbedObject = fingerClaws[i].grabbedObject;
                             }
                             else
                             {
-                                matchedContact = false;
+                                if (clawGrabbedObject == fingerClaws[i].grabbedObject)
+                                {
+                                    matchedContact = true;
+                                }
+                                else
+                                {
+                                    matchedContact = false;
+                                }
                             }
+                            contactPoint++;
                         }
-                        contactPoint++;
                     }
                 }
                 if (contactPoint >= 3 && matchedContact)
                 {
                     isGrabbing = true;
                     GrabProcedure();
-                    Debug.Log(gameObject.GetInstanceID() + " Grab successful");
+                    //Debug.Log(gameObject.GetInstanceID() + " Grab successful");
                     OnSuccessfulGrab?.Invoke(this, new EventArguments (HandleState.ActionSuccessful));
                     handleBusy = false;
                 }
@@ -137,6 +140,7 @@ public class HandleController : MonoBehaviour
                 fingerJoint3.localRotation = Quaternion.RotateTowards(fingerJoint3.localRotation, joint3Open, engageSpeed * 60f * Time.deltaTime);
                 Intrude();
                 clawGrabbedObject = null;
+                grabbedTag = null;
                 handleBusy = false;
             }
         }
@@ -153,21 +157,23 @@ public class HandleController : MonoBehaviour
     }    
     private void GrabProcedure()
     {
+        if (clawGrabbedObject == null) return;
         clawGrabbedObject.transform.parent = clawHand.transform;
         grabbedTag = clawGrabbedObject.tag;
         clawGrabbedObject.tag = "Untagged";
+        clawGrabbedObject.layer = LayerMask.NameToLayer("Robots");
         clawGrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
         clawGrabbedObject.GetComponent<BoxCollider>().enabled = false;
     }
-    private void UnGrabProcedure(GameObject target)
+    private void UnGrabProcedure()
     {
-        if (target == null) return;
+        if (clawGrabbedObject == null) return;
         clawGrabbedObject.GetComponent<BoxCollider>().enabled = true;
         clawGrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
         clawGrabbedObject.tag = grabbedTag;
+        clawGrabbedObject.layer = LayerMask.NameToLayer("Default");
         clawGrabbedObject.transform.parent = null;
         OnDropObject?.Invoke(this, EventArgs.Empty);
-        //clawGrabbedObject = null;
     }
     private void Extrude()
     {
@@ -179,13 +185,16 @@ public class HandleController : MonoBehaviour
         else
         {
             isGrabbing = false;
-            UnGrabProcedure(clawGrabbedObject);
-            contactPoint = 0;
-            for (int i = 0; i < fingerClaws.Length; i++)
+            if (grabbedTag!= null)
             {
-                fingerClaws[i].UpdateContact();
+                UnGrabProcedure();
+                contactPoint = 0;
+                for (int i = 0; i < fingerClaws.Length; i++)
+                {
+                    fingerClaws[i].UpdateContact();
+                }
+                //Debug.Log("Ungrab success!");
             }
-            //Debug.Log("Ungrab success!");
         }
     }
     private void Intrude()

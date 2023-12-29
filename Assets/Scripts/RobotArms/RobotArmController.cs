@@ -44,7 +44,7 @@ public class RobotArmController : MonoBehaviour
 
     private void ArmControl_OnRotationCompleted(object sender, IKCalculator.EventArguments e)
     {
-        Debug.Log("Done Rotating");
+        //Debug.Log("Done Rotating");
         
         switch (e.GetEvent())
         {
@@ -75,6 +75,10 @@ public class RobotArmController : MonoBehaviour
             armControl.ResetRotation();
         }
         
+    }
+    public void ResetArm()
+    {
+        armControl.ResetRotation();
     }
     public void PickAtTarget(Vector3 target)
     {

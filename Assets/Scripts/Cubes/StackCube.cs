@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StackCube : MonoBehaviour
 {
-    private bool touchedGround;
+    private bool touchedGround, isKinematic;
     private float touchGround;
     private GameObject initialMattress;
 
@@ -20,7 +20,7 @@ public class StackCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (touchedGround && gameObject.CompareTag("Grabbable"))
+        if (touchedGround && gameObject.CompareTag("Grabbable") || touchedGround && gameObject.CompareTag("StackedCube"))
         {
             touchGround += Time.deltaTime;
             if (touchGround > 5f)
@@ -28,6 +28,30 @@ public class StackCube : MonoBehaviour
                 ReturnToSpawn(); 
             }
         }
+        else
+        {
+            // Reset the timer upon being picked up 
+            touchGround = 0f;
+        }
+        if (transform.position.y < -10f)
+        {
+            // If the cube somehow falls out of the map, reset the cube position
+            gameObject.SetActive(false);
+        }
+        if (isKinematic)
+        {
+            if (gameObject.GetComponent<Rigidbody>().velocity == Vector3.zero)
+            {
+                gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                gameObject.layer = LayerMask.NameToLayer("Robots");
+                isKinematic = false;
+            }
+        }
+    }
+    private void OnEnable()
+    {
+        gameObject.tag = "Grabbable";
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
     private void OnDisable()
     {
@@ -41,7 +65,7 @@ public class StackCube : MonoBehaviour
         if (initialMattress != null)
         {
             BoxCollider boundary = initialMattress.GetComponent<BoxCollider>();
-            float randomX = Random.Range(boundary.bounds.center.x - 1f, boundary.bounds.center.x + 1f);
+            float randomX = Random.Range(boundary.bounds.center.x - 0.8f, boundary.bounds.center.x + 0.8f);
             float randomZ = Random.Range(boundary.bounds.center.z - 0.5f, boundary.bounds.center.z + 0.5f);
             float randomY = Random.Range(0.7f, 4f);
             //Debug.Log(gameObject.name + " " + randomX + " " + randomY + " " + randomZ);
@@ -54,6 +78,13 @@ public class StackCube : MonoBehaviour
         {
             //Debug.Log("Touch Ground");
             touchedGround = true;
+        }
+        if (collision.gameObject.CompareTag("StackGround") || collision.gameObject.CompareTag("StackedCube"))
+        {
+            // This cube has just hit the stack area or hit another stacked cube and is now considered a stacked cube
+            gameObject.tag = "StackedCube";
+            // Change this value to false to prevent duplicating the value
+            isKinematic = true;
         }
     }
     private void OnCollisionExit(Collision collision)
