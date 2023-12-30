@@ -125,7 +125,7 @@ public class IKCalculator : MonoBehaviour
         effectorTarget = tipTarget + normal * effectorLength;
         isRotating = true;
         OnResetArm?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Reset");
+        //Debug.Log("Reset");
     }
     public void SetActionUponRotation(ActionType action)
     {

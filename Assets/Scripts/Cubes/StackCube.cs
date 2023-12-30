@@ -5,7 +5,6 @@ public class StackCube : MonoBehaviour
     private bool touchedGround, isKinematic;
     private float touchGround;
     private GameObject initialMattress;
-
     private void Awake()
     {
         GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 0f, 0f, 0f, 1f);
@@ -20,7 +19,7 @@ public class StackCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (touchedGround && gameObject.CompareTag("Grabbable") || touchedGround && gameObject.CompareTag("StackedCube"))
+        if (touchedGround && gameObject.CompareTag("Grabbable"))
         {
             touchGround += Time.deltaTime;
             if (touchGround > 5f)
@@ -42,8 +41,10 @@ public class StackCube : MonoBehaviour
         {
             if (gameObject.GetComponent<Rigidbody>().velocity == Vector3.zero)
             {
+                gameObject.tag = "StackedCube";
                 gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                gameObject.layer = LayerMask.NameToLayer("Robots");
+                gameObject.layer = LayerMask.NameToLayer("StackedCubes");
+                // Reset the state of the kinematic call
                 isKinematic = false;
             }
         }
@@ -76,15 +77,17 @@ public class StackCube : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            if (gameObject.CompareTag("StackedCube"))
+            {
+                gameObject.SetActive(false);
+            }
             //Debug.Log("Touch Ground");
             touchedGround = true;
         }
-        if (collision.gameObject.CompareTag("StackGround") || collision.gameObject.CompareTag("StackedCube"))
+        if (collision.gameObject.CompareTag("StackedCube"))
         {
-            // This cube has just hit the stack area or hit another stacked cube and is now considered a stacked cube
-            gameObject.tag = "StackedCube";
-            // Change this value to false to prevent duplicating the value
-            isKinematic = true;
+            // This cube has just hit another stacked cube and is now considered a stacked cube
+            SetKinematic();
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -94,6 +97,18 @@ public class StackCube : MonoBehaviour
             touchedGround = false;
             touchGround = 0;
         }
+    }
+    public void SetKinematic()
+    {
+        isKinematic = true;
+    }
+    public void UnSetKinematic()
+    {
+        // This method is for unsetting the kinematic state :D
+        isKinematic = false;
+        gameObject.tag = "Grabbable";
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
     public GameObject SetSpawn(GameObject mattress)
     {

@@ -19,9 +19,9 @@ public class RobotAgent : MonoBehaviour
     [SerializeField]
     private HashSet<GameObject> stackCubeSet;
     [SerializeField]
-    private GameObject previousCube, previousStackedCube;
+    private GameObject previousCube;
     [SerializeField]
-    private int towerHeight,towerStep;
+    private int towerStep;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +42,8 @@ public class RobotAgent : MonoBehaviour
     {
         if (decision == PerceptionStates.DoStacking)
         {
-            // After dropping a block, the tower's current height should increase
-            previousStackedCube = previousCube;
-            towerHeight++;
             StartCoroutine(ResetArmAfterSeconds(0.5f));
+            //towerStep = 1;
         }
         decision = PerceptionStates.Idle;
     }
@@ -120,83 +118,96 @@ public class RobotAgent : MonoBehaviour
                 else
                 {
                     // The hand is currently holding a cube and it needs to complete its task
+                    previousCube = robotControl.GetCurrentCube();
+                    if (robotControl.GetCurrentTag() == "Grabbable")
+                    {
+                        decision = PerceptionStates.DoStacking;
+                        return;
+                    }
+                    
                     robotControl.DropAtTarget(dropTarget);
                 }
                 break;
             case PerceptionStates.DoStacking:
-                if (Vector3.Distance(transform.position, sysControl.FindClosestPositionWithType(gameObject, SystemController.LocatorType.StackMattress)) >5f)
+                // Do stacking algorithm here :l
+               
+                switch (towerStep)
                 {
-                    // Check if there's a stacking mattress close by, if there's not any (>5f) switchstate
-                    decision = PerceptionStates.Idle;
+                case 1:
+                    robotControl.PickAtTarget(intendedTarget);
+                    if(!robotControl.IsHandEmpty())
+                    {
+                        towerStep = 2;
+                        return;
+                    }
+                    break;
+                case 2:
+                    robotControl.ResetArm();
+                    previousCube = robotControl.GetCurrentCube();
+                    towerStep = 3;
+                    return;
+                case 3:
+                    robotControl.DropAtTarget(dropTarget);
+                    break;
+                default:
+                    dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetButtonLocation();
+                    dropTarget.y += .1f;
+                    robotControl.PickAtTarget(dropTarget);
                     break;
                 }
-                else
-                {
-                    // Do stacking algorithm here, this check determines the height of the tower :l
-                    if (towerHeight < 4)
-                    {
-                        // while the tower is not yet finished
-                        if (towerHeight == 0)
-                        {
-                            // The first cube of the stack
-                            dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetStackLocation();
-                            dropTarget.y += 1f;
-                        }
-                        else
-                        {
-                            // Not the first cube of the stack, the drop location will be the previous one's xyz with +height
-                            dropTarget = previousStackedCube.transform.position;
-                            dropTarget.y += 1f;
-                        }
-                    }
-                    else
-                    {
-                        // After completing the tower, push the button
-                        towerStep = 4;
-                    }
-                    switch(towerStep)
-                    {
-                        case 1:
-                            robotControl.PickAtTarget(intendedTarget);
-                            if(!robotControl.IsHandEmpty())
-                            {
-                                towerStep = 2;
-                                return;
-                            }
-                            break;
-                        case 2:
-                            robotControl.ResetArm();
-                            previousCube = robotControl.GetCurrentCube();
-                            towerStep = 3;
-                            return;
-                        case 3:
-                            robotControl.DropAtTarget(dropTarget);
-                            break;
-                        default:
-                            dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetButtonLocation();
-                            dropTarget.y += .1f;
-                            robotControl.PickAtTarget(dropTarget);
-                            break;
-                    }
-                }
-                break;
+            break;
             default:
-                if (NearestCubeLocator(prioritizedCubeSet) == null)
+                if (NearestCubeLocator(prioritizedCubeSet) == null || robotControl.GetCurrentTag() == "Grabbable")
                 {
-                    if (NearestCubeLocator(stackCubeSet) == null)
+                    if (Vector3.Distance(transform.position, sysControl.FindClosestPositionWithType(gameObject, SystemController.LocatorType.StackMattress)) >5f)
                     {
-                        // No cube to stack and no priority cube
+                        // No cube stacking area and no priority cube near by, switch state to Idle
                         decision = PerceptionStates.Idle;
                     }
                     else
                     {
-                        //No possible priority cube, switch state to Stacking 
-                        decision = PerceptionStates.DoStacking;
-                        intendedTarget = NearestCubeLocator(stackCubeSet).transform.position;
+                        //No possible priority cube, switch state to Stacking
                         if (robotControl.IsHandEmpty())
                         {
-                            towerStep = 1;
+                            //if (previousCube != null)
+                            //{
+                            //    if (previousCube.CompareTag("StackedCube"))
+                            //    {
+                            //        previousStackedCube = previousCube;
+                            //    }
+                            //}
+                            if (NearestCubeLocator(stackCubeSet, 12f) == null)
+                            {
+                                // Check if there's any stacking cube nearby, if not, then switch state to Idle
+                                Debug.Log("No cube to stack");
+                            }
+                            else
+                            {
+                                intendedTarget = NearestCubeLocator(stackCubeSet, 12f).transform.position;
+                                //Debug.Log("Set nearest cube: " + NearestCubeLocator(stackCubeSet).name);
+                                towerStep = 1;
+                            }
                         }
+                        // Check the current tower height
+                        switch (sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetCurrentTowerStack())
+                        {
+                            case 0:
+                                // The first cube of the stack
+                                dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetStackLocation();
+                                dropTarget.y += 1f;
+                                break;
+                            case 4:
+                                Debug.Log("Tower Completed");
+                                towerStep = 0;
+                                break;
+                            default:
+                                // While the tower is not yet finished
+                                // Not the first cube of the stack, the drop location will be the previous one's xyz with +height
+                                dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetStackTop();
+                                dropTarget.y += 1f;
+                                break;
+                        }
+                        decision = PerceptionStates.DoStacking;
                     } 
                 }
                 else
@@ -211,6 +222,7 @@ public class RobotAgent : MonoBehaviour
     }
     private GameObject NearestCubeLocator(HashSet<GameObject> cubeSet)
     {
+        if (cubeSet.Count == 0) return null;
         // Maximum search distance is 5 unit(s) from the Claw Tip
         float distance = 10f;
         GameObject result = null;
@@ -221,6 +233,25 @@ public class RobotAgent : MonoBehaviour
                 continue;
             }
             if(Vector3.Distance(robotControl.GetClawTipPosition(), cube.transform.position) <= distance)
+            {
+                result = cube;
+                distance = Vector3.Distance(robotControl.GetClawTipPosition(), cube.transform.position);
+            }
+        }
+        return result;
+    }
+    private GameObject NearestCubeLocator(HashSet<GameObject> cubeSet, float distance)
+    {
+        if (cubeSet.Count == 0) return null;
+        // Maximum search distance is 5 unit(s) from the Claw Tip
+        GameObject result = null;
+        foreach (GameObject cube in cubeSet)
+        {
+            if (cube == previousCube || cube.GetComponent<Rigidbody>().velocity != Vector3.zero)
+            {
+                continue;
+            }
+            if (Vector3.Distance(robotControl.GetClawTipPosition(), cube.transform.position) <= distance)
             {
                 result = cube;
                 distance = Vector3.Distance(robotControl.GetClawTipPosition(), cube.transform.position);

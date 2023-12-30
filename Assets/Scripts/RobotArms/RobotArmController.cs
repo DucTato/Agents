@@ -107,13 +107,14 @@ public class RobotArmController : MonoBehaviour
         }
         else
         {
-            if (armControl.GetRotationStatus() && handleControl.GetHandleState())
+            if (armControl.GetRotationStatus() || handleControl.GetHandleState())
             {
                 return true;
             }
             else
-                return false;   
+                return false;
         }
+
     }
     public bool IsHandEmpty()
     {
@@ -122,5 +123,9 @@ public class RobotArmController : MonoBehaviour
     public GameObject GetCurrentCube()
     {
         return handleControl.GetCube();
+    }
+    public string GetCurrentTag()
+    {
+        return handleControl.CurrentTag();
     }
 }

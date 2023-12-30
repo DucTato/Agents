@@ -17,6 +17,8 @@ public class StackMattressScript : MonoBehaviour
     [SerializeField]
     private List<GameObject> cubesToSpawn;
     private int index;
+    [SerializeField]
+    private StackGroundScript groundScript;
     private void Awake()
     {
         
@@ -60,23 +62,22 @@ public class StackMattressScript : MonoBehaviour
             timerCount = spawnDelay;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Grabbable") || other.gameObject.CompareTag("StackedCube"))
-        {
-            //Debug.Log("Returned a stack cube");
-            other.gameObject.SetActive(false);
-        }
-    }
     public Vector3 GetStackLocation()
     {
         //Debug.Log(transform.GetChild(0).name);
-        return transform.GetChild(0).transform.position;
+        return groundScript.transform.position;
     }
     public Vector3 GetButtonLocation()
     {
-        //Debug.Log(transform.GetChild(1).name);
-        return transform.GetChild(1).transform.position;
+        return transform.parent.GetChild(2).transform.position;
+    }
+    public int GetCurrentTowerStack()
+    {
+        return groundScript.GetCurrentHeight();
+    }
+    public Vector3 GetStackTop()
+    {
+        return groundScript.GetCurrentTop();
     }
 }
 public enum StackType

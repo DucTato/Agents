@@ -24,6 +24,7 @@ public class DestroyButton : MonoBehaviour
             else
             {
                 downTime = 2f;
+                GetComponent<BoxCollider>().enabled = true;
                 // Return to normal color
                 GetComponent<Renderer>().material.color = new Color(1f, 0.356f, 0.133f);
                 pushedDown = false;
@@ -37,6 +38,7 @@ public class DestroyButton : MonoBehaviour
         {
             // Activate an explosion
             Debug.Log("Boom");
+            GetComponent<BoxCollider>().enabled = false;
             pushedDown = true;
             PushedDownState(pushedDown);
             // Switch to a lighter shade of Orange

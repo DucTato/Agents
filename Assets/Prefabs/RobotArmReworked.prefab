@@ -168,7 +168,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!114 &2564073823202869449
 MonoBehaviour:
@@ -214,6 +214,10 @@ MonoBehaviour:
   decision: 0
   intendedTarget: {x: 0, y: 0, z: 0}
   dropTarget: {x: 0, y: 0, z: 0}
+  previousCube: {fileID: 0}
+  previousStackedCube: {fileID: 0}
+  towerHeight: 0
+  towerStep: 0
 --- !u!1 &8933627476482070368
 GameObject:
   m_ObjectHideFlags: 0

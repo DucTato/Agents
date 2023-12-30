@@ -213,6 +213,7 @@ public class HandleController : MonoBehaviour
     {
         if (clawGrabbedObject == null)
         {
+            //Debug.Log("Hand is Empty");
             return true;
         }
         else
@@ -224,6 +225,13 @@ public class HandleController : MonoBehaviour
             return null;
         else
             return clawGrabbedObject;
+    }
+    public string CurrentTag()
+    {
+        if (grabbedTag == null)
+            return "";
+        else
+            return grabbedTag;
     }
 }
 
