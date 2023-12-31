@@ -37,7 +37,10 @@ public class DestroyButton : MonoBehaviour
         if (other.gameObject.CompareTag("Recolorable"))
         {
             // Activate an explosion
-            Debug.Log("Boom");
+            transform.root.GetChild(0).GetComponent<StackMattressScript>().ExplodeStack();
+            // Reset the steps of building a tower to the first one
+            other.transform.root.GetComponent<RobotAgent>().ResetTowerStep();
+            // Handle the visual of the button
             GetComponent<BoxCollider>().enabled = false;
             pushedDown = true;
             PushedDownState(pushedDown);

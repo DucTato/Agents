@@ -697,7 +697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4425015414440401825, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.73
+      value: -10.49
       objectReference: {fileID: 0}
     - target: {fileID: 4425015414440401825, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}
       propertyPath: m_LocalPosition.y
@@ -705,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4425015414440401825, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4425015414440401825, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}
       propertyPath: m_LocalRotation.w
@@ -738,6 +738,10 @@ PrefabInstance:
     - target: {fileID: 4425015414440401851, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}
       propertyPath: m_Name
       value: StackMattress
+      objectReference: {fileID: 0}
+    - target: {fileID: 5814695515119605130, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}
+      propertyPath: LightsModule.light
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0163bdd4ea21f2c4ea40b8c4bf445eee, type: 3}

@@ -21,7 +21,7 @@ public class RobotAgent : MonoBehaviour
     [SerializeField]
     private GameObject previousCube;
     [SerializeField]
-    private int towerStep;
+    private int towerStep, towerAttempt;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +43,7 @@ public class RobotAgent : MonoBehaviour
         if (decision == PerceptionStates.DoStacking)
         {
             StartCoroutine(ResetArmAfterSeconds(0.5f));
-            //towerStep = 1;
+            towerAttempt++;
         }
         decision = PerceptionStates.Idle;
     }
@@ -176,14 +176,16 @@ public class RobotAgent : MonoBehaviour
                             //        previousStackedCube = previousCube;
                             //    }
                             //}
-                            if (NearestCubeLocator(stackCubeSet, 12f) == null)
+                            if (NearestCubeLocator(stackCubeSet, 11f) == null)
                             {
                                 // Check if there's any stacking cube nearby, if not, then switch state to Idle
                                 Debug.Log("No cube to stack");
+                                decision = PerceptionStates.Idle;
+                                break;
                             }
                             else
                             {
-                                intendedTarget = NearestCubeLocator(stackCubeSet, 12f).transform.position;
+                                intendedTarget = NearestCubeLocator(stackCubeSet, 11f).transform.position;
                                 //Debug.Log("Set nearest cube: " + NearestCubeLocator(stackCubeSet).name);
                                 towerStep = 1;
                             }
@@ -206,6 +208,10 @@ public class RobotAgent : MonoBehaviour
                                 dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetStackTop();
                                 dropTarget.y += 1f;
                                 break;
+                        }
+                        if(towerAttempt > 5)
+                        {
+                            towerStep = 0;
                         }
                         decision = PerceptionStates.DoStacking;
                     } 
@@ -263,6 +269,11 @@ public class RobotAgent : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         robotControl.ResetArm();
+    }
+    public void ResetTowerStep()
+    {
+        towerStep = 1;
+        towerAttempt = 0;
     }
 }
 public enum PerceptionStates

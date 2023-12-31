@@ -3,10 +3,12 @@ using UnityEngine;
 public class StackGroundScript : MonoBehaviour
 {
     private GameObject currentBase;
+    private ParticleSystem boomFX;
     // Start is called before the first frame update
     void Start()
     {
         currentBase = null;
+        boomFX = transform.root.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -39,7 +41,7 @@ public class StackGroundScript : MonoBehaviour
     }
     public Vector3 GetCurrentTop()
     {
-        if (!currentBase)
+        if (currentBase == null)
         {
             // There's nothing on the stack area
             return Vector3.zero;
@@ -60,5 +62,19 @@ public class StackGroundScript : MonoBehaviour
             }
             return highest.transform.position;
         }
-    }    
+    } 
+    public void Explode()
+    {
+        if (currentBase==null)
+        { return; }
+        //Debug.Log("Boom");
+        boomFX.Play();
+        BoxCollider StackGroundCollider = GetComponent<BoxCollider>();
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, 6f, 1<<8|1<<3))
+        {
+            collider.GetComponent<Rigidbody>().isKinematic = false;
+            collider.GetComponent<Rigidbody>().AddExplosionForce(15f, StackGroundCollider.bounds.max, 10f, 10f, ForceMode.Impulse);
+            currentBase = null;
+        }
+    }
 }

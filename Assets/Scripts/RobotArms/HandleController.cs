@@ -171,7 +171,7 @@ public class HandleController : MonoBehaviour
         clawGrabbedObject.GetComponent<BoxCollider>().enabled = true;
         clawGrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
         clawGrabbedObject.tag = grabbedTag;
-        clawGrabbedObject.layer = LayerMask.NameToLayer("Default");
+        clawGrabbedObject.layer = LayerMask.NameToLayer("Cubes");
         clawGrabbedObject.transform.parent = null;
         OnDropObject?.Invoke(this, EventArgs.Empty);
     }

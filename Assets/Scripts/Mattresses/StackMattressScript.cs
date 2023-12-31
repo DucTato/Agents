@@ -79,6 +79,10 @@ public class StackMattressScript : MonoBehaviour
     {
         return groundScript.GetCurrentTop();
     }
+    public void ExplodeStack()
+    {
+        groundScript.Explode();
+    }
 }
 public enum StackType
 {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 242632844423985536}
   - component: {fileID: 242632844423985537}
   - component: {fileID: 3449466545781141456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StackCube
   m_TagString: Grabbable
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}

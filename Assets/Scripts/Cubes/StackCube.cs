@@ -22,7 +22,7 @@ public class StackCube : MonoBehaviour
         if (touchedGround && gameObject.CompareTag("Grabbable"))
         {
             touchGround += Time.deltaTime;
-            if (touchGround > 5f)
+            if (touchGround > 10f)
             {
                 ReturnToSpawn(); 
             }
@@ -51,8 +51,7 @@ public class StackCube : MonoBehaviour
     }
     private void OnEnable()
     {
-        gameObject.tag = "Grabbable";
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        UnSetKinematic();
     }
     private void OnDisable()
     {
@@ -60,6 +59,7 @@ public class StackCube : MonoBehaviour
     }
     private void ReturnToSpawn()
     {
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         touchedGround = false;
         touchGround = 0;
         //Locate the initial mattress that spawned this cube
@@ -108,7 +108,7 @@ public class StackCube : MonoBehaviour
         isKinematic = false;
         gameObject.tag = "Grabbable";
         gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        gameObject.layer = LayerMask.NameToLayer("Cubes");
     }
     public GameObject SetSpawn(GameObject mattress)
     {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7794001465296743754}
   - component: {fileID: 7794001465296743758}
   - component: {fileID: 7794001465296743759}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RedCube
   m_TagString: Priority
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -127,4 +127,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6130d10fb294d409420b272c3d81b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialMattress: {fileID: 0}
