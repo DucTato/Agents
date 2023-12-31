@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class RobotAgent : MonoBehaviour
+public class RobotAgent : MonoBehaviour, IPointerClickHandler
 {
     private SystemController sysControl;
     private RobotArmController robotControl;
     [SerializeField]
     private float pollingRate;
-    private float pollingCount;
+    private float pollingCount, pressTimer, currentMagnitude = 1;
     [SerializeField]
     private PerceptionStates decision;
     [SerializeField]
@@ -18,10 +20,17 @@ public class RobotAgent : MonoBehaviour
     private Vector3 intendedTarget, dropTarget;
     [SerializeField]
     private HashSet<GameObject> stackCubeSet;
-    [SerializeField]
     private GameObject previousCube;
     [SerializeField]
+    private GameObject canvasElements;
+    [SerializeField]
+    private Button rotateButton;
+    [SerializeField]
+    private Text magnitudeText;
+    [SerializeField]
     private int towerStep, towerAttempt;
+    private Outline highlight;
+    private bool reverseRotation;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +41,7 @@ public class RobotAgent : MonoBehaviour
         robotControl = GetComponent<RobotArmController>();
         robotControl.OnDropCompletion += RobotControl_OnDropCompletion;
         robotControl.OnReset += RobotControl_OnReset;
+        highlight = GetComponent<Outline>();
     }
     private void OnDisable()
     {
@@ -274,6 +284,90 @@ public class RobotAgent : MonoBehaviour
     {
         towerStep = 1;
         towerAttempt = 0;
+    }
+    // This part is for the in-world-space UI elements
+    public bool GetSelectState()
+    {
+        return highlight.enabled;
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // This method here is to intercept the click event 
+        //Debug.Log("Clicked on a robot arm");
+        if (highlight.enabled)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                // Right click toggle reverse rotation
+                // switch to reverse state of the 'Rotate' button
+                if (reverseRotation)
+                {
+                    reverseRotation = false;
+                    rotateButton.transform.localScale = new Vector3(0.52f, 0.52f, 0.52f);
+                }
+                else
+                {
+                    reverseRotation = true;
+                    rotateButton.transform.localScale = new Vector3(-0.52f, 0.52f, 0.52f);
+                }
+                return;
+            }
+            canvasElements.SetActive(false);
+            highlight.enabled = false;
+        }
+        else
+        {
+            canvasElements.SetActive(true);
+            magnitudeText.text = currentMagnitude.ToString();
+            highlight.enabled = true;
+        }
+    }
+    public void ZplusButton()
+    {
+        Vector3 direction = transform.forward * currentMagnitude;
+        transform.position += direction;
+    }
+    public void ZminusButton()
+    {
+        Vector3 direction = transform.forward * currentMagnitude;
+        transform.position -= direction;
+    }
+    public void XplusButton()
+    {
+        Vector3 direction = transform.right * currentMagnitude;
+        transform.position += direction;
+    }
+    public void XminusButton()
+    {
+        Vector3 direction = transform.right * currentMagnitude;
+        transform.position -= direction;
+    }
+    public void MagnitudeButton()
+    {
+        switch(currentMagnitude)
+        {
+            case 1:
+                currentMagnitude = 2;
+                break;
+            case 2:
+                currentMagnitude = 5;
+                break;
+            default:
+                currentMagnitude = 1;
+                break;
+        }
+        magnitudeText.text = currentMagnitude.ToString();
+    }
+    public void RotateButton()
+    {
+        if(reverseRotation)
+        {
+            transform.Rotate(0f, -10 * currentMagnitude, 0f);
+        }
+        else
+        {
+            transform.Rotate(0f, 10 * currentMagnitude, 0f);
+        }
     }
 }
 public enum PerceptionStates
