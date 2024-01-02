@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
     private RobotArmController robotControl;
     [SerializeField]
     private float pollingRate;
-    private float pollingCount, pressTimer, currentMagnitude = 1;
+    private float pollingCount, currentMagnitude = 1;
     [SerializeField]
     private PerceptionStates decision;
     [SerializeField]
@@ -116,8 +117,9 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                     else
                     {
                         // Switch decision to the another state because there's no close by valid point
-                        decision = PerceptionStates.DoStacking;
-                        break;
+                        decision = PerceptionStates.Idle;
+                        robotControl.ResetArm();
+                        return;
                     }
                 }
                 if (robotControl.IsHandEmpty())
@@ -134,7 +136,6 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                         decision = PerceptionStates.DoStacking;
                         return;
                     }
-                    
                     robotControl.DropAtTarget(dropTarget);
                 }
                 break;
@@ -163,7 +164,7 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                     dropTarget = sysControl.FindClosestObjectWithType(gameObject, SystemController.LocatorType.StackMattress).GetComponent<StackMattressScript>().GetButtonLocation();
                     dropTarget.y += .1f;
                     robotControl.PickAtTarget(dropTarget);
-                    break;
+                    return;
                 }
             break;
             default:
@@ -179,13 +180,6 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                         //No possible priority cube, switch state to Stacking
                         if (robotControl.IsHandEmpty())
                         {
-                            //if (previousCube != null)
-                            //{
-                            //    if (previousCube.CompareTag("StackedCube"))
-                            //    {
-                            //        previousStackedCube = previousCube;
-                            //    }
-                            //}
                             if (NearestCubeLocator(stackCubeSet, 11f) == null)
                             {
                                 // Check if there's any stacking cube nearby, if not, then switch state to Idle
@@ -209,7 +203,7 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                                 dropTarget.y += 1f;
                                 break;
                             case 4:
-                                Debug.Log("Tower Completed");
+                                //Debug.Log("Tower Completed");
                                 towerStep = 0;
                                 break;
                             default:
@@ -233,6 +227,7 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                     decision = PerceptionStates.DoPriority;
                     intendedTarget = NearestCubeLocator(prioritizedCubeSet).transform.position;
                 }
+                //Debug.Log("Done thinking");
                 break;
         }
     }

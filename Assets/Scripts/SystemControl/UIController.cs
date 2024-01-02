@@ -12,8 +12,7 @@ public class UIController : MonoBehaviour
     private Dropdown sceneSelectionMenu;
     // Start is called before the first frame update
     void Start()
-    {
-        Debug.Log("UI updated");
+    { 
         // Populate the scene options in the menu
         sceneSelectionMenu.AddOptions(mapSelections);
         sceneSelectionMenu.captionText.text = gameObject.scene.name;

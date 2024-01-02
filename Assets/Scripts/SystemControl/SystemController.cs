@@ -59,7 +59,8 @@ public class SystemController : MonoBehaviour
         switch (type)
         {
             case LocatorType.Robot:
-                return FindClosestObject(startPoint.transform.position, robotAgents).transform.position;
+                if (FindClosestObject(startPoint.transform.position, robotAgents) == null) return Vector3.positiveInfinity;
+                else return FindClosestObject(startPoint.transform.position, robotAgents).transform.position;
             case LocatorType.EndMattress:
                 return FindClosestObject(startPoint.transform.position, endMattresses).transform.position;
             case LocatorType.StackMattress:
