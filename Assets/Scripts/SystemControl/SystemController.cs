@@ -59,8 +59,8 @@ public class SystemController : MonoBehaviour
         switch (type)
         {
             case LocatorType.Robot:
-                if (FindClosestObject(startPoint.transform.position, robotAgents) == null) return Vector3.positiveInfinity;
-                else return FindClosestObject(startPoint.transform.position, robotAgents).transform.position;
+                if (FindClosestObject(startPoint.transform.position, RobotScreening(startPoint.transform.position)) == null) return Vector3.positiveInfinity;
+                else return FindClosestObject(startPoint.transform.position, RobotScreening(startPoint.transform.position)).transform.position;
             case LocatorType.EndMattress:
                 return FindClosestObject(startPoint.transform.position, endMattresses).transform.position;
             case LocatorType.StackMattress:
@@ -74,7 +74,7 @@ public class SystemController : MonoBehaviour
         switch (type)
         {
             case LocatorType.Robot:
-                return FindClosestObject(startPoint.transform.position, robotAgents);
+                return FindClosestObject(startPoint.transform.position, RobotScreening(startPoint.transform.position));
             case LocatorType.EndMattress:
                 return FindClosestObject(startPoint.transform.position, endMattresses);
             case LocatorType.StackMattress:
@@ -102,5 +102,21 @@ public class SystemController : MonoBehaviour
             }
         }
         return closest;
+    }
+    private List<GameObject> RobotScreening(Vector3 point)
+    {
+        // The purpose of this function is to only get robots that are closer to the end than the requested robot's position (point)
+        var result = new List<GameObject>();
+        // The distance between selected robot (point) and the closest end point from that point
+        Vector3 closestEnd = FindClosestObject(point, endMattresses).transform.position;
+        float distance = Vector3.Distance(point, closestEnd);
+        foreach (GameObject seenRobot in robotAgents)
+        {
+            if (Vector3.Distance(seenRobot.transform.position, closestEnd) < distance)
+            {
+                result.Add(seenRobot);
+            }
+        }
+        return result;
     }
 }

@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     void Start()
     { 
         // Populate the scene options in the menu
+        mapSelections.Remove(gameObject.scene.name);
         sceneSelectionMenu.AddOptions(mapSelections);
         sceneSelectionMenu.captionText.text = gameObject.scene.name;
     }
@@ -26,5 +27,6 @@ public class UIController : MonoBehaviour
     public void OnSceneSelected(int option)
     {
         SceneManager.LoadScene(mapSelections[option]);
+        Debug.Log("Load scene #" + option);
     }
 }
