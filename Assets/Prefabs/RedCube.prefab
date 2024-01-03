@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7794001465296743755}
   - component: {fileID: 7794001465296743754}
   - component: {fileID: 7794001465296743758}
-  - component: {fileID: 7794001465296743759}
+  - component: {fileID: 1132494657953710255}
   m_Layer: 3
   m_Name: RedCube
   m_TagString: Priority
@@ -115,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7794001465296743759
+--- !u!114 &1132494657953710255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
