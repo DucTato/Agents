@@ -14,6 +14,7 @@ public class MouseLook : MonoBehaviour
         mainCamera = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;
         enable = true;
+        SystemController.instance.GetComponent<UIController>().SetMainCam(mainCamera);
     }
 
     // Update is called once per frame

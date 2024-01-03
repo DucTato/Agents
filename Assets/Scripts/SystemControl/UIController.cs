@@ -10,6 +10,9 @@ public class UIController : MonoBehaviour
     private List<string> mapSelections;
     [SerializeField]
     private Dropdown sceneSelectionMenu;
+    [SerializeField]
+    private GameObject pausePanel;
+    private Camera mainCam;
     // Start is called before the first frame update
     void Start()
     { 
@@ -22,11 +25,31 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (pausePanel.activeInHierarchy)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                pausePanel.SetActive(false);
+                mainCam.GetComponent<MouseLook>().enabled = true;
+                mainCam.GetComponent<Spectator>().enabled = true;  
+            }
+            else
+            {
+                pausePanel.SetActive(true);
+                mainCam.GetComponent<MouseLook>().enabled = false;
+                mainCam.GetComponent<Spectator>().enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
     }
     public void OnSceneSelected(int option)
     {
         SceneManager.LoadScene(mapSelections[option]);
         Debug.Log("Load scene #" + option);
+    }
+    public void SetMainCam(Camera cam)
+    {
+        mainCam = cam;
     }
 }
