@@ -10,7 +10,7 @@ Inital source code:
 
 Open project with Unity, waiting for running asset and run the project
 
-# Some image when run the project
+# Some images when run the project
 
 ![Pic 1](./md_image/pic_1.png)
 _Agent is building a tower_
