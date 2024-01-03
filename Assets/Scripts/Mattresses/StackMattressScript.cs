@@ -64,7 +64,6 @@ public class StackMattressScript : MonoBehaviour
     }
     public Vector3 GetStackLocation()
     {
-        //Debug.Log(transform.GetChild(0).name);
         return groundScript.transform.position;
     }
     public Vector3 GetButtonLocation()

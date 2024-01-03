@@ -112,7 +112,6 @@ public class HandleController : MonoBehaviour
                 {
                     isGrabbing = true;
                     GrabProcedure();
-                    //Debug.Log(gameObject.GetInstanceID() + " Grab successful");
                     OnSuccessfulGrab?.Invoke(this, new EventArguments (HandleState.ActionSuccessful));
                     handleBusy = false;
                 }
@@ -193,7 +192,6 @@ public class HandleController : MonoBehaviour
                 {
                     fingerClaws[i].UpdateContact();
                 }
-                //Debug.Log("Ungrab success!");
             }
         }
     }
@@ -213,7 +211,6 @@ public class HandleController : MonoBehaviour
     {
         if (clawGrabbedObject == null)
         {
-            //Debug.Log("Hand is Empty");
             return true;
         }
         else

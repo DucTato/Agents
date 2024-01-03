@@ -3,7 +3,7 @@ using UnityEngine;
 public class ColorGenerator : MonoBehaviour
 {
     private Color randomColor;
-    // Start is called before the first frame update
+    // Awake is called before the first frame update
     void Awake()
     {
         randomColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0f, 1f);
@@ -14,6 +14,5 @@ public class ColorGenerator : MonoBehaviour
                 child.GetComponent<Renderer>().material.color = randomColor;
             }
         }    
-
     }
 }

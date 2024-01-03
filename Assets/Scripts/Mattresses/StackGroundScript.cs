@@ -10,12 +10,6 @@ public class StackGroundScript : MonoBehaviour
         currentBase = null;
         boomFX = transform.root.GetComponent<ParticleSystem>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Grabbable"))
@@ -67,7 +61,6 @@ public class StackGroundScript : MonoBehaviour
     {
         if (currentBase==null)
         { return; }
-        //Debug.Log("Boom");
         boomFX.Play();
         BoxCollider StackGroundCollider = GetComponent<BoxCollider>();
         foreach (Collider collider in Physics.OverlapSphere(transform.position, 6f, 1<<8|1<<3))

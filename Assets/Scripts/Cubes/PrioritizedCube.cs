@@ -42,7 +42,6 @@ public class PrioritizedCube : MonoBehaviour
             float randomX = Random.Range(boundary.bounds.center.x - 2f, boundary.bounds.center.x + 2f);
             float randomZ = Random.Range(boundary.bounds.center.z - 1f, boundary.bounds.center.z + 1f);
             float randomY = Random.Range(0.7f, 4f);
-            //Debug.Log(gameObject.name + " " + randomX + " " + randomY + " " + randomZ);
             transform.SetPositionAndRotation(new Vector3(randomX, randomY, randomZ), initialMattress.transform.rotation);
         }
     }
@@ -54,7 +53,6 @@ public class PrioritizedCube : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            //Debug.Log("Touch Ground");
             touchedGround = true;
         }
     }    

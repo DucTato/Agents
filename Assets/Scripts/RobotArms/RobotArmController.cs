@@ -43,9 +43,7 @@ public class RobotArmController : MonoBehaviour
     }
 
     private void ArmControl_OnRotationCompleted(object sender, IKCalculator.EventArguments e)
-    {
-        //Debug.Log("Done Rotating");
-        
+    {       
         switch (e.GetEvent())
         {
             case IKCalculator.ActionType.PickAt:
@@ -57,24 +55,6 @@ public class RobotArmController : MonoBehaviour
             case IKCalculator.ActionType.NoneAt: 
                 break;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DropAtTarget(intendedTarget);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PickAtTarget(intendedTarget);
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            armControl.ResetRotation();
-        }
-        
     }
     public void ResetArm()
     {

@@ -74,7 +74,6 @@ public class UIController : MonoBehaviour
 
     private void ButtonPress(int index)
     {
-        //Debug.Log("Button: " + index);
         // Store the index of this button for later use
         buttonIndex = index;
         mapPanel.SetActive(true);
@@ -94,7 +93,6 @@ public class UIController : MonoBehaviour
     public void OnSceneSelected(int option)
     {
         SceneManager.LoadScene(mapSelections[option]);
-        //Debug.Log("Load scene #" + option);
     }
     public void SetMainCam(Camera cam)
     {

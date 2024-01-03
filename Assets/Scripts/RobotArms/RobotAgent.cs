@@ -76,9 +76,6 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
             See();
             Think();
             pollingCount = pollingRate;
-            
-            //Debug.Log(prioritizedCubeSet.Count +" Priority");
-            //Debug.Log(stackCubeSet.Count +" Stack");
         }
         
     }
@@ -183,14 +180,12 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                             if (NearestCubeLocator(stackCubeSet, 11f) == null)
                             {
                                 // Check if there's any stacking cube nearby, if not, then switch state to Idle
-                                Debug.Log("No cube to stack");
                                 decision = PerceptionStates.Idle;
                                 break;
                             }
                             else
                             {
                                 intendedTarget = NearestCubeLocator(stackCubeSet, 11f).transform.position;
-                                //Debug.Log("Set nearest cube: " + NearestCubeLocator(stackCubeSet).name);
                                 towerStep = 1;
                             }
                         }
@@ -203,7 +198,6 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                                 dropTarget.y += 1f;
                                 break;
                             case 4:
-                                //Debug.Log("Tower Completed");
                                 towerStep = 0;
                                 break;
                             default:
@@ -222,12 +216,10 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
                 }
                 else
                 {
-                    //Debug.Log("Red Cube in range");
                     // Possible priority cube within range, do priority task
                     decision = PerceptionStates.DoPriority;
                     intendedTarget = NearestCubeLocator(prioritizedCubeSet).transform.position;
                 }
-                //Debug.Log("Done thinking");
                 break;
         }
     }
@@ -288,7 +280,6 @@ public class RobotAgent : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         // This method here is to intercept the click event 
-        //Debug.Log("Clicked on a robot arm");
         if (highlight.enabled)
         {
             if (eventData.button == PointerEventData.InputButton.Right)

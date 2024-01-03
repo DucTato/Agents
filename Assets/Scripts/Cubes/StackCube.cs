@@ -69,7 +69,6 @@ public class StackCube : MonoBehaviour
             float randomX = Random.Range(boundary.bounds.center.x - 0.8f, boundary.bounds.center.x + 0.8f);
             float randomZ = Random.Range(boundary.bounds.center.z - 0.5f, boundary.bounds.center.z + 0.5f);
             float randomY = Random.Range(0.7f, 4f);
-            //Debug.Log(gameObject.name + " " + randomX + " " + randomY + " " + randomZ);
             transform.SetPositionAndRotation(new Vector3(randomX, randomY, randomZ), initialMattress.transform.rotation);
         }
     }
@@ -81,7 +80,6 @@ public class StackCube : MonoBehaviour
             {
                 gameObject.SetActive(false);
             }
-            //Debug.Log("Touch Ground");
             touchedGround = true;
         }
         if (collision.gameObject.CompareTag("StackedCube"))
