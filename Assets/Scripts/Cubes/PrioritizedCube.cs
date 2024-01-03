@@ -20,9 +20,9 @@ public class PrioritizedCube : MonoBehaviour
         if (touchedGround && gameObject.CompareTag("Priority"))
         {
             touchGround += Time.deltaTime;
-            if (touchGround >= 15f)
+            if (touchGround >= 20f)
             {
-                // If a cube stay idle on the ground for 15 seconds then reset the cube's position
+                // If a cube stay idle on the ground for 20 seconds then reset the cube's position
                 ReturnToSpawn();
             }
         }
