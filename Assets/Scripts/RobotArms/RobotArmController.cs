@@ -9,7 +9,6 @@ public class RobotArmController : MonoBehaviour
     private HandleController handleControl;
     [SerializeField]
     private IKCalculator armControl;
-    public Vector3 intendedTarget;
     public bool isPicking;
     // Start is called before the first frame update
     void Start()
