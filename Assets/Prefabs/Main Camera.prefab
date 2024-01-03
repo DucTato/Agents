@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1734511395060730628}
   - component: {fileID: 1734511395060730627}
   - component: {fileID: 1734511395060730630}
-  - component: {fileID: 1734511395060730629}
   - component: {fileID: 40271366}
   m_Layer: 0
   m_Name: Main Camera
@@ -91,18 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookSpeed: 3
---- !u!114 &1734511395060730629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1734511395060730625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841d33ab329275c42859e5c74f016323, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  inputKeycodes: 3401000020000000320100007700000073000000610000006400000030010000
   speed: 10
 --- !u!114 &40271366
 MonoBehaviour:
